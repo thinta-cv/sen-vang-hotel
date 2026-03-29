@@ -2,6 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
+import logo from '../../assets/images/logo-lotus.png';
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -29,8 +31,13 @@ const Header = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="text-2xl font-serif font-bold text-primary-dark">
-              Sen Vàng
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="h-12 w-12 flex items-center justify-center overflow-hidden rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <img src={logo} alt="Sen Vàng Logo" className="h-10 w-10 object-contain" />
+              </div>
+              <span className="text-2xl font-serif font-bold text-secondary group-hover:text-primary transition-colors">
+                Sen Vàng
+              </span>
             </Link>
           </div>
 
