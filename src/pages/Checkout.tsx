@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { CreditCard, Wallet, Landmark, ShieldCheck, Mail, Phone, User, CheckCircle2, Loader2 } from 'lucide-react';
+import { CreditCard, Wallet, Landmark, ShieldCheck, User, CheckCircle2, Loader2 } from 'lucide-react';
 import { createBooking } from '../services/api';
 
 const Checkout = () => {
