@@ -7,6 +7,20 @@ import type { Room } from '../data/mockData';
 
 const Home = () => {
   const [featuredRooms, setFeaturedRooms] = useState<Room[]>([]);
+  const [currentBg, setCurrentBg] = useState(0);
+
+  const backgrounds = [
+    "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop", // Hotel night
+    "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2070&auto=format&fit=crop", // Pool/Lobby
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop"  // Luxury Suite
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % backgrounds.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [backgrounds.length]);
 
   useEffect(() => {
     const loadFeatured = async () => {
@@ -23,34 +37,49 @@ const Home = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Slider */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop" 
-            alt="Hotel Hero" 
-            className="w-full h-full object-cover brightness-50"
-          />
+          {backgrounds.map((bg, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: currentBg === index ? 1 : 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <img 
+                src={bg} 
+                alt={`Hotel Hero ${index}`} 
+                className="w-full h-full object-cover brightness-[0.4]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-secondary/40 via-transparent to-secondary/60"></div>
+            </motion.div>
+          ))}
         </div>
         
-        <div className="relative z-10 text-center text-white px-4 max-w-5xl">
+        <div className="relative z-10 text-center text-white px-4 max-w-6xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 italic leading-tight">
-               Nghỉ Dưỡng Tuyệt Vời Tại <span className="text-primary not-italic">Sen Vàng</span>
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight tracking-tight drop-shadow-2xl">
+               <span className="block md:inline whitespace-nowrap">Nghỉ Dưỡng Tuyệt Vời Tại</span>
+               <span className="block md:inline-block md:ml-4 text-primary font-black italic transform transition-transform hover:scale-110 duration-500 text-5xl sm:text-7xl md:text-9xl tracking-tighter">
+                  Sen Vàng
+               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light max-w-3xl mx-auto">
-              Trải nghiệm sự sang trọng bậc nhất và dịch vụ tận tâm tại trung tâm thành phố biển Vũng Tàu thơ mộng.
+            <p className="text-sm md:text-xl mb-12 text-white/80 font-medium max-w-3xl mx-auto uppercase tracking-[0.2em]">
+              Trải nghiệm sự sang trọng bậc nhất tại trung tâm biển Vũng Tàu.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/rooms" className="bg-primary hover:bg-primary-dark text-white px-10 py-4 rounded-md font-bold text-lg transition-all shadow-xl hover:shadow-primary/30">
-                Khám Phá Phòng
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link to="/rooms" className="bg-primary hover:bg-white text-secondary-dark px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest transition-all shadow-2xl hover:shadow-primary/40 transform hover:-translate-y-1">
+                Khám Phá Ngay
               </Link>
-              <Link to="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-10 py-4 rounded-md font-bold text-lg transition-all">
-                Về Chúng Tôi
+              <Link to="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-2 border-white/20 px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest transition-all">
+                Giới Thiệu
               </Link>
             </div>
           </motion.div>

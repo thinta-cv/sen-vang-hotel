@@ -2,11 +2,11 @@
 
 @theme {
   --color-primary: #FFD700;
-  --color-primary-dark: #DAA520;
-  --color-primary-light: #FFF44F;
-  --color-secondary: #0077BE;
-  --color-secondary-light: #4DA1D1;
-  --color-secondary-dark: #004F8A;
+  --color-primary-dark: #C5A000;
+  --color-primary-light: #FFEA70;
+  --color-secondary: #1E3A8A;
+  --color-secondary-light: #3B82F6;
+  --color-secondary-dark: #172554;
   
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
