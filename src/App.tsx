@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
 
 // Public Imports
 import Header from './components/layout/Header';
@@ -17,12 +18,26 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminBookings from './pages/admin/AdminBookings';
 import AdminRooms from './pages/admin/AdminRooms';
 import AdminGuests from './pages/admin/AdminGuests';
+import Login from './pages/admin/Login';
+
+// Protected Route Component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const token = localStorage.getItem('sen_vang_admin_token');
+  if (!token) return <Navigate to="/admin/login" replace />;
+  return <>{children}</>;
+};
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin/login" element={<Login />} />
+        
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<Dashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="rooms" element={<AdminRooms />} />

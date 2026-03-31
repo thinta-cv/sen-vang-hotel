@@ -1,5 +1,23 @@
 const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api';
 
+const getAuthHeader = () => {
+  const token = localStorage.getItem('sen_vang_admin_token');
+  return token ? { 'Authorization': `Bearer ${token}` } : {};
+};
+
+export const login = async (credentials: any) => {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials)
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Đăng nhập thất bại');
+  }
+  return response.json();
+};
+
 export const fetchRooms = async () => {
   const response = await fetch(`${API_URL}/rooms`);
   if (!response.ok) throw new Error('Failed to fetch rooms');
@@ -15,9 +33,7 @@ export const fetchRoomById = async (id: string) => {
 export const createBooking = async (bookingData: any) => {
   const response = await fetch(`${API_URL}/bookings`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(bookingData),
   });
   if (!response.ok) throw new Error('Failed to create booking');
@@ -25,7 +41,9 @@ export const createBooking = async (bookingData: any) => {
 };
 
 export const fetchAdminBookings = async () => {
-  const response = await fetch(`${API_URL}/admin/bookings`);
+  const response = await fetch(`${API_URL}/admin/bookings`, {
+    headers: { ...getAuthHeader() }
+  });
   if (!response.ok) throw new Error('Failed to fetch admin bookings');
   return response.json();
 };
@@ -33,7 +51,10 @@ export const fetchAdminBookings = async () => {
 export const updateBookingStatus = async (id: string, status: string) => {
   const response = await fetch(`${API_URL}/bookings/${id}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
     body: JSON.stringify({ status })
   });
   if (!response.ok) throw new Error('Failed to update booking status');
@@ -41,7 +62,9 @@ export const updateBookingStatus = async (id: string, status: string) => {
 };
 
 export const fetchAdminGuests = async () => {
-  const response = await fetch(`${API_URL}/admin/guests`);
+  const response = await fetch(`${API_URL}/admin/guests`, {
+    headers: { ...getAuthHeader() }
+  });
   if (!response.ok) throw new Error('Failed to fetch admin guests');
   return response.json();
 };
@@ -49,7 +72,10 @@ export const fetchAdminGuests = async () => {
 export const createRoom = async (roomData: any) => {
   const response = await fetch(`${API_URL}/rooms`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
     body: JSON.stringify(roomData)
   });
   if (!response.ok) throw new Error('Failed to create room');
@@ -59,7 +85,10 @@ export const createRoom = async (roomData: any) => {
 export const updateRoom = async (id: string, roomData: any) => {
   const response = await fetch(`${API_URL}/rooms/${id}`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+      ...getAuthHeader()
+    },
     body: JSON.stringify(roomData)
   });
   if (!response.ok) throw new Error('Failed to update room');
@@ -68,7 +97,8 @@ export const updateRoom = async (id: string, roomData: any) => {
 
 export const deleteRoom = async (id: string) => {
   const response = await fetch(`${API_URL}/rooms/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: { ...getAuthHeader() }
   });
   if (!response.ok) throw new Error('Failed to delete room');
   return response.json();
