@@ -1,10 +1,9 @@
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, Bed, CalendarCheck, Settings, LogOut, UserCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const AdminLayout = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [adminName, setAdminName] = useState('Admin');
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const AdminLayout = () => {
   const handleLogout = () => {
     localStorage.removeItem('sen_vang_admin_token');
     localStorage.removeItem('sen_vang_admin_user');
-    navigate('/admin/login');
+    window.location.href = '/admin/login';
   };
 
   return (
