@@ -4,6 +4,7 @@ import { Calendar, Users, Star, Waves, ShieldCheck, Clock, ChevronRight } from '
 import { motion } from 'framer-motion';
 import { fetchRooms } from '../services/api';
 import type { Room } from '../data/mockData';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   const [featuredRooms, setFeaturedRooms] = useState<Room[]>([]);
@@ -36,6 +37,14 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
+      <Helmet>
+        <title>Sen Vàng Hotel & Villa Vũng Tàu | Kỳ nghỉ dưỡng đẳng cấp 5 sao</title>
+        <meta name="description" content="Khám phá Sen Vàng Hotel & Villa tại Vũng Tàu. Không gian nghỉ dưỡng sang trọng, dịch vụ đẳng cấp, hồ bơi vô cực và view biển tuyệt đẹp. Đặt phòng ngay để nhận ưu đãi." />
+        <meta property="og:title" content="Sen Vàng Hotel & Villa Vũng Tàu - Đỉnh cao nghỉ dưỡng" />
+        <meta property="og:description" content="Trải nghiệm sự sang trọng và ấm cúng tại Sen Vàng. Vị trí đắc địa, phòng nghỉ cao cấp, phục vụ tận tâm." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative h-[90vh] md:h-screen flex items-center justify-center overflow-hidden">
         {/* Background Slider */}

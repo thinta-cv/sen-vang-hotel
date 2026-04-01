@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Award, Clock, Heart, Shield } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   return (
     <div className="flex-grow pt-20 bg-white min-h-screen pb-20">
+      <Helmet>
+        <title>Về Chúng Tôi | Sen Vàng Hotel & Villa Vũng Tàu</title>
+        <meta name="description" content="Tìm hiểu về câu chuyện hình thành và giá trị cốt lõi của Sen Vàng Hotel. Hành trình mang đến dịch vụ nghỉ dưỡng cao cấp tại thành phố biển Vũng Tàu." />
+      </Helmet>
       {/* Hero */}
       <div className="relative h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 overflow-hidden">

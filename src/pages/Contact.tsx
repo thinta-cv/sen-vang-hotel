@@ -1,8 +1,13 @@
 import { MapPin, Phone, Mail, Send } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
   return (
     <div className="flex-grow pt-20 bg-gray-50 min-h-screen pb-20">
+      <Helmet>
+        <title>Liên Hệ | Sen Vàng Hotel & Villa Vũng Tàu</title>
+        <meta name="description" content="Liên hệ đặt phòng Hotel & Villa tại Vũng Tàu. Hỗ trợ 24/7 qua Hotline: 0901.234.567. Địa chỉ: 20 Trần Quý Cáp, Thắng Tam, Vũng Tàu." />
+      </Helmet>
       <div className="bg-secondary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 drop-shadow-md">Liên hệ với chúng tôi</h1>
@@ -22,23 +27,22 @@ const Contact = () => {
                   <MapPin className="h-6 w-6 mr-4 flex-shrink-0" />
                   <div>
                     <h3 className="font-bold mb-1">Địa chỉ</h3>
-                    <p className="text-white/80">123 Đường Thùy Vân, Phường Thắng Tam, Thành phố Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu</p>
+                    <p className="text-white/80">20 Trần Quý Cáp, Phường Thắng Tam, Thành phố Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Phone className="h-6 w-6 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="font-bold mb-1">Điện thoại</h3>
-                    <p className="text-white/80">+84 254 381 2345</p>
-                    <p className="text-white/80 text-sm mt-1">Hỗ trợ 24/7 (Phím số 1)</p>
+                    <h3 className="font-bold mb-1">Điện thoại Hotline</h3>
+                    <p className="text-white/80">0901.234.567</p>
+                    <p className="text-white/80 text-sm mt-1">Hỗ trợ đặt phòng 24/7</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Mail className="h-6 w-6 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="font-bold mb-1">Email gửi về thư ký</h3>
-                    <p className="text-white/80">info@senvanghotel.com</p>
-                    <p className="text-white/80 text-sm mt-1">booking@senvanghotel.com</p>
+                    <h3 className="font-bold mb-1">Email</h3>
+                    <p className="text-white/80">senvangvungtau.hotel@gmail.com</p>
                   </div>
                 </div>
               </div>

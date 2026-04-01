@@ -3,6 +3,7 @@ import { Search, Wind, Coffee, Wifi, Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchRooms } from '../services/api';
 import type { Room } from '../data/mockData';
+import { Helmet } from 'react-helmet-async';
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -52,6 +53,10 @@ const Rooms = () => {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>Danh Sách Phòng & Villa | Sen Vàng Hotel Vũng Tàu</title>
+        <meta name="description" content="Hệ thống phòng nghỉ đa dạng: Deluxe, Suite và Villa nguyên căn tại Vũng Tàu. Đầy đủ tiện nghi 5 sao, view biển, giá tốt nhất khi đặt trực tiếp." />
+      </Helmet>
       {/* Page Header */}
       <div className="bg-secondary py-16 text-center text-white">
         <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Danh Sách Nghỉ Dưỡng</h1>

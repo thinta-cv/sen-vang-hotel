@@ -27,27 +27,31 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+import { HelmetProvider } from 'react-helmet-async';
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/admin/login" element={<Login />} />
-        
-        <Route path="/admin" element={
-          <ProtectedRoute>
-            <AdminLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<Dashboard />} />
-          <Route path="bookings" element={<AdminBookings />} />
-          <Route path="rooms" element={<AdminRooms />} />
-          <Route path="guests" element={<AdminGuests />} />
-          <Route path="settings" element={<div className="p-8 bg-white rounded-xl shadow-sm text-center"><h1>Cài đặt hệ thống đang được xây dựng...</h1></div>} />
-        </Route>
+    <HelmetProvider>
+      <Router>
+        <Routes>
+          <Route path="/admin/login" element={<Login />} />
+          
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<Dashboard />} />
+            <Route path="bookings" element={<AdminBookings />} />
+            <Route path="rooms" element={<AdminRooms />} />
+            <Route path="guests" element={<AdminGuests />} />
+            <Route path="settings" element={<div className="p-8 bg-white rounded-xl shadow-sm text-center"><h1>Cài đặt hệ thống đang được xây dựng...</h1></div>} />
+          </Route>
 
-        <Route path="*" element={<PublicWrapper />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<PublicWrapper />} />
+        </Routes>
+      </Router>
+    </HelmetProvider>
   );
 }
 
