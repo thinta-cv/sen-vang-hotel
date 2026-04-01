@@ -1,4 +1,7 @@
+import { rooms as mockRooms } from '../data/mockData';
+
 const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000/api';
+
 
 const getAuthHeader = (): Record<string, string> => {
   const token = localStorage.getItem('sen_vang_admin_token');
@@ -19,15 +22,36 @@ export const login = async (credentials: any) => {
 };
 
 export const fetchRooms = async () => {
-  const response = await fetch(`${API_URL}/rooms`);
-  if (!response.ok) throw new Error('Failed to fetch rooms');
-  return response.json();
+  try {
+    const response = await fetch(`${API_URL}/rooms`);
+    if (!response.ok) throw new Error('Failed to fetch rooms');
+    const data = await response.json();
+    return (Array.isArray(data) && data.length > 0) ? data : mockRooms;
+  } catch (error) {
+    console.warn("Backend not ready, returning mock rooms", error);
+    return mockRooms;
+  }
 };
 
 export const fetchRoomById = async (id: string) => {
-  const response = await fetch(`${API_URL}/rooms/${id}`);
-  if (!response.ok) throw new Error('Failed to fetch room');
-  return response.json();
+  try {
+    const response = await fetch(`${API_URL}/rooms/${id}`);
+    if (!response.ok) {
+      const fallback = mockRooms.find(r => r.id === id);
+      if (fallback) return fallback;
+      throw new Error('Failed to fetch room');
+    }
+    const data = await response.json();
+    if (!data || data.error) {
+      const fallback = mockRooms.find(r => r.id === id);
+      if (fallback) return fallback;
+    }
+    return data;
+  } catch (error) {
+    const fallback = mockRooms.find(r => r.id === id);
+    if (fallback) return fallback;
+    throw new Error('Failed to fetch room');
+  }
 };
 
 export const createBooking = async (bookingData: any) => {
