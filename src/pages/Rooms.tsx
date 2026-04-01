@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Wind, Coffee, Wifi, Waves } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchRooms } from '../services/api';
 import type { Room } from '../data/mockData';
 import { Helmet } from 'react-helmet-async';
@@ -9,8 +9,13 @@ const Rooms = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState('All');
-  const [category, setCategory] = useState<'ALL' | 'HOTEL' | 'VILLA'>('ALL');
+  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const bedQuery = queryParams.get('bed') || 'ALL';
+
+  const [filter, setFilter] = useState(bedQuery);
+  const [category, setCategory] = useState<'ALL' | 'HOTEL' | 'VILLA'>('HOTEL'); // Khách sạn mặc định
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -28,11 +33,26 @@ const Rooms = () => {
     loadRooms();
   }, []);
 
+  // Update filter when URL changes
+  useEffect(() => {
+    setFilter(queryParams.get('bed') || 'ALL');
+  }, [location.search]);
+
   const filteredRooms = rooms.filter(room => {
-    const matchesType = filter === 'All' || room.type === filter;
+    const matchesType = filter === 'ALL' || room.type === filter;
     const matchesCategory = category === 'ALL' || room.category === category;
     return matchesType && matchesCategory;
   });
+
+  const getFilterLabel = (type: string) => {
+    switch (type) {
+      case 'SINGLE': return 'Phòng Đơn';
+      case 'DOUBLE': return 'Phòng Đôi';
+      case 'TRIPLE': return 'Phòng 3 Giường';
+      case 'QUAD': return 'Phòng 4 Giường';
+      default: return 'Tất cả các hạng';
+    }
+  };
 
   if (loading) {
     return (
@@ -55,13 +75,14 @@ const Rooms = () => {
     <div className="pt-20">
       <Helmet>
         <title>Danh Sách Phòng & Villa | Sen Vàng Hotel Vũng Tàu</title>
-        <meta name="description" content="Hệ thống phòng nghỉ đa dạng: Deluxe, Suite và Villa nguyên căn tại Vũng Tàu. Đầy đủ tiện nghi 5 sao, view biển, giá tốt nhất khi đặt trực tiếp." />
+        <meta name="description" content="Hệ thống phòng nghỉ đa dạng: Phòng Đơn, Đôi, 3 Giường, 4 Giường tại Vũng Tàu. Giá tốt nhất khi đặt trực tiếp." />
       </Helmet>
+      
       {/* Page Header */}
       <div className="bg-secondary py-16 text-center text-white">
-        <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Danh Sách Nghỉ Dưỡng</h1>
+        <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 uppercase">Danh Sách Nghỉ Dưỡng</h1>
         <p className="max-w-2xl mx-auto px-4 text-gray-300">
-          Từ phòng khách sạn sang trọng đến những căn Villa nguyên căn riêng tư tại Vũng Tàu.
+          Hệ thống phòng lưu trú tiêu chuẩn với đa dạng lựa chọn cho cá nhân, gia đình và nhóm bạn bè.
         </p>
       </div>
 
@@ -70,9 +91,8 @@ const Rooms = () => {
         <div className="flex justify-center mb-8">
           <div className="inline-flex p-1 bg-gray-100 rounded-xl">
              {[
-               { id: 'ALL', label: 'Tất cả' },
                { id: 'HOTEL', label: 'Khách sạn' },
-               { id: 'VILLA', label: 'Villa' }
+               { id: 'VILLA', label: 'Biệt Thự' }
              ].map((cat) => (
                <button
                  key={cat.id}
@@ -88,13 +108,13 @@ const Rooms = () => {
         {/* Filters and Search */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
           <div className="flex items-center gap-4 overflow-x-auto pb-2 w-full md:w-auto">
-            {['All', 'Deluxe', 'Suite', 'Superior'].map((t) => (
+            {['ALL', 'SINGLE', 'DOUBLE', 'TRIPLE', 'QUAD'].map((t) => (
               <button 
                 key={t}
                 onClick={() => setFilter(t)}
-                className={`px-6 py-2 rounded-full border transition-all whitespace-nowrap ${filter === t ? 'bg-primary border-primary text-white shadow-md' : 'border-gray-300 text-gray-600 hover:border-primary'}`}
+                className={`px-6 py-2 rounded-full border transition-all whitespace-nowrap ${filter === t ? 'bg-primary border-primary text-white shadow-md' : 'border-gray-300 text-gray-600 hover:border-primary font-medium'}`}
               >
-                {t === 'All' ? 'Tất cả hạng' : t}
+                {getFilterLabel(t)}
               </button>
             ))}
           </div>
@@ -103,11 +123,12 @@ const Rooms = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input 
               type="text" 
-              placeholder="Tìm kiếm..."
+              placeholder="Tìm kiếm phòng..."
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-primary focus:border-primary outline-none"
             />
           </div>
         </div>
+
 
         {/* Room Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

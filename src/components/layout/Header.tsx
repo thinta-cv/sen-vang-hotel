@@ -28,13 +28,44 @@ const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const NavLinks = () => (
+  const DesktopNavLinks = () => (
+    <div className="flex items-center space-x-8">
+      <Link to="/" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/') ? 'text-primary font-bold' : 'text-white'}`}>Trang chủ</Link>
+      <Link to="/about" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/about') ? 'text-primary font-bold' : 'text-white'}`}>Giới thiệu</Link>
+      
+      {/* Khách Sạn Dropdown */}
+      <div className="relative group py-4">
+        <Link to="/rooms" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/rooms') || location.pathname.includes('/room/') ? 'text-primary font-bold' : 'text-white'}`}>
+          Khách Sạn
+        </Link>
+        <div className="absolute left-0 top-full -mt-2 w-56 bg-white shadow-xl rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 overflow-hidden border border-gray-100">
+          <Link to="/rooms?bed=SINGLE" className="block px-5 py-3 text-sm font-semibold text-secondary-dark hover:bg-yellow-50 hover:text-primary border-b border-gray-50 transition-colors">Phòng Đơn</Link>
+          <Link to="/rooms?bed=DOUBLE" className="block px-5 py-3 text-sm font-semibold text-secondary-dark hover:bg-yellow-50 hover:text-primary border-b border-gray-50 transition-colors">Phòng Đôi</Link>
+          <Link to="/rooms?bed=TRIPLE" className="block px-5 py-3 text-sm font-semibold text-secondary-dark hover:bg-yellow-50 hover:text-primary border-b border-gray-50 transition-colors">Phòng 3 Giường</Link>
+          <Link to="/rooms?bed=QUAD" className="block px-5 py-3 text-sm font-semibold text-secondary-dark hover:bg-yellow-50 hover:text-primary transition-colors">Phòng 4 Giường</Link>
+        </div>
+      </div>
+
+      <Link to="/villas" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/villas') ? 'text-primary font-bold' : 'text-white'}`}>Biệt Thự</Link>
+      <Link to="/apartments" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/apartments') ? 'text-primary font-bold' : 'text-white'}`}>Căn Hộ</Link>
+      <Link to="/contact" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/contact') ? 'text-primary font-bold' : 'text-white'}`}>Liên hệ</Link>
+    </div>
+  );
+
+  const MobileNavLinks = () => (
     <>
-      <Link to="/" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Trang chủ</Link>
-      <Link to="/about" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/about') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Giới thiệu</Link>
-      <Link to="/rooms" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/rooms') || location.pathname.includes('/room/') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Phòng nghỉ</Link>
-      <Link to="/services" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/services') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Dịch vụ</Link>
-      <Link to="/contact" className={`font-medium text-xs uppercase tracking-widest transition-colors hover:text-primary ${isActive('/contact') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Liên hệ</Link>
+      <Link to="/" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Trang chủ</Link>
+      <Link to="/about" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/about') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Giới thiệu</Link>
+      <Link to="/rooms" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/rooms') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Khách Sạn</Link>
+      <div className="flex flex-col space-y-3 w-full items-center bg-white/5 py-4 rounded-lg">
+        <Link to="/rooms?bed=SINGLE" className="text-sm text-gray-300 hover:text-primary" onClick={() => setIsMenuOpen(false)}>• Phòng Đơn</Link>
+        <Link to="/rooms?bed=DOUBLE" className="text-sm text-gray-300 hover:text-primary" onClick={() => setIsMenuOpen(false)}>• Phòng Đôi</Link>
+        <Link to="/rooms?bed=TRIPLE" className="text-sm text-gray-300 hover:text-primary" onClick={() => setIsMenuOpen(false)}>• Phòng 3 Giường</Link>
+        <Link to="/rooms?bed=QUAD" className="text-sm text-gray-300 hover:text-primary" onClick={() => setIsMenuOpen(false)}>• Phòng 4 Giường</Link>
+      </div>
+      <Link to="/villas" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/villas') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Biệt Thự (Villa)</Link>
+      <Link to="/apartments" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/apartments') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Căn Hộ Mini</Link>
+      <Link to="/contact" className={`font-medium text-lg uppercase tracking-widest transition-colors ${isActive('/contact') ? 'text-primary font-bold' : 'text-white'}`} onClick={() => setIsMenuOpen(false)}>Liên hệ</Link>
     </>
   );
 
@@ -88,7 +119,7 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-10 items-center">
-              <NavLinks />
+              <DesktopNavLinks />
             </nav>
 
             {/* Actions */}
@@ -113,9 +144,9 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-secondary border-t border-white/10 absolute w-full shadow-2xl">
-          <div className="px-6 pt-6 pb-8 space-y-6 flex flex-col items-center text-center">
-            <NavLinks />
+        <div className="md:hidden bg-secondary border-t border-white/10 absolute w-full shadow-2xl h-screen overflow-y-auto">
+          <div className="px-6 pt-6 pb-32 space-y-6 flex flex-col items-center text-center">
+            <MobileNavLinks />
             <Link to="/rooms" className="w-full bg-primary text-secondary-dark py-4 rounded-xl font-black uppercase tracking-widest shadow-lg" onClick={() => setIsMenuOpen(false)}>
               Đặt ngay
             </Link>

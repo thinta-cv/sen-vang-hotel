@@ -8,6 +8,8 @@ import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Rooms from './pages/Rooms';
+import Villas from './pages/Villas';
+import Apartments from './pages/Apartments';
 import RoomDetails from './pages/RoomDetails';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
@@ -81,6 +83,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="rooms" element={<Rooms />} />
+            <Route path="villas" element={<Villas />} />
+            <Route path="apartments" element={<Apartments />} />
             <Route path="room/:id" element={<RoomDetails />} />
             <Route path="rooms/:id" element={<RoomDetails />} />
             <Route path="services" element={<Services />} />

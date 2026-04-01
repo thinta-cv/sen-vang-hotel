@@ -224,6 +224,55 @@ const AdminRooms = () => {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Kiểu Phòng (Để Lọc Khách Sạn)</label>
+                  <select 
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none font-bold"
+                    value={formData.type}
+                    onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  >
+                    <option value="">-- Bỏ qua nếu là Villa/Căn hộ --</option>
+                    <option value="SINGLE">Phòng Đơn</option>
+                    <option value="DOUBLE">Phòng Đôi</option>
+                    <option value="TRIPLE">Phòng 3 Giường</option>
+                    <option value="QUAD">Phòng 4 Giường</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Sức chứa (Người)</label>
+                  <input 
+                    type="number" 
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none"
+                    value={formData.capacity}
+                    onChange={(e) => setFormData({...formData, capacity: Number(e.target.value)})}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Diện tích (m2)</label>
+                  <input 
+                    type="text" 
+                    placeholder="VD: 35m2..."
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none"
+                    value={formData.size}
+                    onChange={(e) => setFormData({...formData, size: e.target.value})}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Mô tả Giường</label>
+                  <input 
+                    type="text" 
+                    placeholder="VD: 1 Giường King, 2 Giường đơn..."
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none"
+                    value={formData.bed}
+                    onChange={(e) => setFormData({...formData, bed: e.target.value})}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <label className="text-xs font-black uppercase text-gray-500 tracking-wider">Ảnh (Link Unsplash/Web)</label>
                 <div className="space-y-3">
