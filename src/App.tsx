@@ -1,5 +1,6 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Public Imports
 import Header from './components/layout/Header';
@@ -27,48 +28,14 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-import { HelmetProvider } from 'react-helmet-async';
-
-function App() {
-  return (
-    <HelmetProvider>
-      <Router>
-        <Routes>
-          <Route path="/admin/login" element={<Login />} />
-          
-          <Route path="/admin" element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-            <Route index element={<Dashboard />} />
-            <Route path="bookings" element={<AdminBookings />} />
-            <Route path="rooms" element={<AdminRooms />} />
-            <Route path="guests" element={<AdminGuests />} />
-            <Route path="settings" element={<div className="p-8 bg-white rounded-xl shadow-sm text-center"><h1>Cài đặt hệ thống đang được xây dựng...</h1></div>} />
-          </Route>
-
-          <Route path="*" element={<PublicWrapper />} />
-        </Routes>
-      </Router>
-    </HelmetProvider>
-  );
-}
-
-function PublicWrapper() {
+// Layout cho trang Public (Khách)
+const PublicLayout = () => {
   return (
     <div className="flex flex-col min-h-screen relative">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/rooms" element={<Rooms />} />
-        <Route path="/room/:id" element={<RoomDetails />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="*" element={<div className="pt-32 pb-20 text-center"><h1>404 - Không tìm thấy trang</h1></div>} />
-      </Routes>
+      <main className="flex-grow">
+        <Outlet />
+      </main>
       <Footer />
       
       {/* Floating Zalo Button */}
@@ -87,6 +54,42 @@ function PublicWrapper() {
         </div>
       </a>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <HelmetProvider>
+      <Router>
+        <Routes>
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<Dashboard />} />
+            <Route path="bookings" element={<AdminBookings />} />
+            <Route path="rooms" element={<AdminRooms />} />
+            <Route path="guests" element={<AdminGuests />} />
+            <Route path="settings" element={<div className="p-8 bg-white rounded-xl shadow-sm text-center"><h1>Cài đặt hệ thống đang được xây dựng...</h1></div>} />
+          </Route>
+
+          {/* Public Routes */}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="rooms" element={<Rooms />} />
+            <Route path="room/:id" element={<RoomDetails />} />
+            <Route path="services" element={<Services />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="*" element={<div className="pt-32 pb-20 text-center text-secondary"><h1>404 - Không tìm thấy trang</h1></div>} />
+          </Route>
+        </Routes>
+      </Router>
+    </HelmetProvider>
   );
 }
 

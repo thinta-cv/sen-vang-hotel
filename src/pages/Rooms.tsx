@@ -161,7 +161,7 @@ const Rooms = () => {
                      <div className="text-sm text-gray-500">
                        Sức chứa: <span className="font-bold text-gray-800">{room.capacity} Người</span>
                      </div>
-                     <Link to={`/rooms/${room.id}`} className="text-primary font-bold hover:underline flex items-center gap-1">
+                     <Link to={`/room/${room.id}`} className="text-primary font-bold hover:underline flex items-center gap-1">
                        Chi tiết 
                      </Link>
                   </div>
