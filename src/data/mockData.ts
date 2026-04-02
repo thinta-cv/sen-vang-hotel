@@ -99,5 +99,42 @@ export const rooms: Room[] = [
     amenities: ['Wi-Fi miễn phí', 'Tủ lạnh lớn', 'Bộ sofa nhỏ', 'Phòng tắm rộng', 'Trà/Cà phê miễn phí'],
     description: 'Căn phòng rộng nhất trong cấu trúc khách sạn của Sen Vàng, đặc biệt phù hợp cho nhóm thân hữu đi phượt cuối tuần.',
     featured: false
+  },
+  {
+    id: 'villa-ocean-1',
+    name: 'Biệt Thự Sen Vàng (Hồ Bơi Riêng)',
+    category: 'VILLA',
+    location: 'Bãi Sau, Vũng Tàu',
+    type: 'VILLA',
+    price: 6500000,
+    capacity: 15,
+    size: '400m²',
+    bed: '6 Phòng ngủ độc lập',
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop'
+    ],
+    amenities: ['Hồ bơi 50m2', 'Dàn Karaoke xịn', 'Sân Vườn BBQ', 'Gara 2 ô tô lớn', 'Bếp Full Dụng Cụ', 'Cách biển 200m'],
+    description: 'Biệt thự nguyên căn sang trọng bậc nhất dành riêng cho các đại gia đình hoặc team building công ty. Được trang bị thiết kế chuẩn mở, liền mạch giữa sân vườn, hồ bơi và khu sinh hoạt chung.',
+    featured: true
+  },
+  {
+    id: 'apt-studio-1',
+    name: 'Căn Hộ Studio Dài Hạn',
+    category: 'APARTMENT',
+    location: 'Trung tâm Vũng Tàu',
+    type: 'APARTMENT',
+    price: 1800000,
+    capacity: 3,
+    size: '55m²',
+    bed: '1 Giường đôi lớn & Sofa Bed',
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1502672260266-1c1de2d9d00c?q=80&w=2070&auto=format&fit=crop'
+    ],
+    amenities: ['Bếp gia đình', 'Bàn làm việc', 'Máy giặt/sấy', 'Ban công hóng gió', 'Miễn phí điện nước'],
+    description: 'Giải pháp tuyệt vời cho khách đi công tác dài ngày hoặc gia đình lưu trú theo tuần/tháng. Đầy đủ không gian tiện nghi như chính ngôi nhà của bạn.',
+    featured: false
   }
 ];
