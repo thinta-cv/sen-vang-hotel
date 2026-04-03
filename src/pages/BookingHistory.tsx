@@ -19,7 +19,8 @@ const BookingHistory = () => {
 
     const fetchBookings = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/customer/bookings', {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL.replace('/api', '') : 'http://127.0.0.1:5000';
+        const res = await fetch(`${baseUrl}/api/customer/bookings`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {

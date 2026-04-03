@@ -21,7 +21,8 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 
     try {
       const endpoint = isLogin ? '/api/auth/customer-login' : '/api/auth/customer-register';
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL.replace('/api', '') : 'http://127.0.0.1:5000';
+      const res = await fetch(`${baseUrl}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
