@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { fetchRooms } from '../services/api';
 import type { Room } from '../data/mockData';
 import { Link } from 'react-router-dom';
-import { MapPin, Users, Maximize, Waves, Palmtree, CarFront, ChevronRight } from 'lucide-react';
+import { MapPin, Users, Maximize, Waves, CarFront, ChevronRight } from 'lucide-react';
 
 const Villas = () => {
   const [villas, setVillas] = useState<Room[]>([]);
