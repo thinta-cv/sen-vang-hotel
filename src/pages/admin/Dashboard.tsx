@@ -34,7 +34,8 @@ const Dashboard = () => {
     const days: Record<string, number> = {};
     // Get last 7 days including today
     for (let i = 6; i >= 0; i--) {
-      const d = new Array(new Date().setDate(new Date().getDate() - i))[0] as unknown as Date;
+      const d = new Date();
+      d.setDate(d.getDate() - i);
       days[format(d, 'yyyy-MM-dd')] = 0;
     }
 
