@@ -14,6 +14,7 @@ import RoomDetails from './pages/RoomDetails';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import Checkout from './pages/Checkout';
+import BookingHistory from './pages/BookingHistory';
 
 // Admin Imports
 import AdminLayout from './pages/admin/AdminLayout';
@@ -87,6 +88,7 @@ function App() {
             <Route path="apartments" element={<Apartments />} />
             <Route path="room/:id" element={<RoomDetails />} />
             <Route path="rooms/:id" element={<RoomDetails />} />
+            <Route path="history" element={<BookingHistory />} />
             <Route path="services" element={<Services />} />
             <Route path="contact" element={<Contact />} />
             <Route path="checkout" element={<Checkout />} />

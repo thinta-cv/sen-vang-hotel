@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, MapPin, Mail, Phone } from 'lucide-react';
+import { Menu, X, MapPin, Mail, Phone, UserCircle, LogOut, History } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import LoginModal from '../auth/LoginModal';
 
 import logo from '../../assets/images/logo-official.png';
 
@@ -20,6 +21,26 @@ const ZaloIcon = ({ className }: { className?: string }) => (
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  // Load user from local storage
+  useEffect(() => {
+    const userStr = localStorage.getItem('sen_vang_user');
+    if (userStr) {
+      try {
+        setUser(JSON.parse(userStr));
+      } catch (e) {}
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('sen_vang_token');
+    localStorage.removeItem('sen_vang_user');
+    setUser(null);
+    window.location.reload();
+  };
 
   // Scroll to top on route change
   useEffect(() => {
@@ -124,6 +145,21 @@ const Header = () => {
 
             {/* Actions */}
             <div className="hidden md:flex items-center space-x-6">
+              {user ? (
+                <div className="relative group">
+                  <span className="flex items-center gap-2 text-white font-bold cursor-pointer hover:text-primary transition-colors">
+                    <UserCircle className="h-6 w-6 text-primary" /> {user.name}
+                  </span>
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white shadow-xl rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+                    <Link to="/history" className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-secondary-dark hover:bg-yellow-50 border-b border-gray-100 transition-colors"><History className="h-4 w-4 text-primary" /> Đơn Đặt Phòng</Link>
+                    <button onClick={handleLogout} className="flex items-center gap-2 w-full text-left px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"><LogOut className="h-4 w-4" /> Đăng xuất</button>
+                  </div>
+                </div>
+              ) : (
+                <button onClick={() => setShowLoginModal(true)} className="flex items-center gap-2 text-white hover:text-primary transition-colors font-bold text-sm tracking-wider uppercase">
+                  <UserCircle className="h-6 w-6" /> Đăng Nhập
+                </button>
+              )}
               <Link to="/rooms" className="bg-primary hover:bg-primary-dark text-secondary-dark px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all shadow-xl hover:shadow-primary/20 transform hover:-translate-y-0.5">
                 Đặt phòng ngay
               </Link>
@@ -146,13 +182,28 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-secondary border-t border-white/10 absolute w-full shadow-2xl h-screen overflow-y-auto">
           <div className="px-6 pt-6 pb-32 space-y-6 flex flex-col items-center text-center">
+            {user ? (
+               <div className="text-white border border-white/20 p-4 rounded-xl w-full">
+                  <p className="font-bold text-primary mb-3">Xin chào, {user.name}!</p>
+                  <Link to="/history" className="block py-2" onClick={() => setIsMenuOpen(false)}>Đơn Đặt Phòng Của Tôi</Link>
+                  <button onClick={handleLogout} className="block w-full py-2 text-red-400">Đăng Xuất</button>
+               </div>
+            ) : (
+               <button onClick={() => { setShowLoginModal(true); setIsMenuOpen(false); }} className="w-full bg-white/10 text-white py-4 rounded-xl font-bold border border-white/20">
+                  <UserCircle className="h-6 w-6 inline mb-1 mr-2" />
+                  Đăng Nhập Khách Hàng
+               </button>
+            )}
             <MobileNavLinks />
             <Link to="/rooms" className="w-full bg-primary text-secondary-dark py-4 rounded-xl font-black uppercase tracking-widest shadow-lg" onClick={() => setIsMenuOpen(false)}>
-              Đặt ngay
+              Đặt phòng ngay
             </Link>
           </div>
         </div>
       )}
+
+      {/* Tích hợp LoginModal */}
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </header>
   );
 }
