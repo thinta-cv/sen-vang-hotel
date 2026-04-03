@@ -9,8 +9,13 @@ const AdminLayout = () => {
   useEffect(() => {
     const userJson = localStorage.getItem('sen_vang_admin_user');
     if (userJson) {
-      const user = JSON.parse(userJson);
-      setAdminName(user.name);
+      try {
+        const user = JSON.parse(userJson);
+        setAdminName(user.name || 'Admin');
+      } catch (e) {
+        console.error("Lỗi parse user:", e);
+        setAdminName('Admin');
+      }
     }
   }, []);
 

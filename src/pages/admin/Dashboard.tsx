@@ -39,9 +39,13 @@ const Dashboard = () => {
     }
 
     bookings.forEach(b => {
-      const dateKey = format(parseISO(b.createdAt), 'yyyy-MM-dd');
-      if (days[dateKey] !== undefined) {
-        days[dateKey] += b.totalPrice;
+      if (b.createdAt) {
+        try {
+          const dateKey = format(parseISO(b.createdAt), 'yyyy-MM-dd');
+          if (days[dateKey] !== undefined) {
+            days[dateKey] += b.totalPrice || 0;
+          }
+        } catch (e) {}
       }
     });
 

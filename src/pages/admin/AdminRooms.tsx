@@ -150,7 +150,7 @@ const AdminRooms = () => {
               </p>
               
               <div className="flex flex-wrap gap-2">
-                {room.amenities.slice(0, 3).map((a: string, i: number) => (
+                {(room.amenities || []).slice(0, 3).map((a: string, i: number) => (
                   <span key={i} className="text-[10px] bg-gray-50 text-gray-400 px-2 py-1 rounded-md border border-gray-100 uppercase font-medium">#{a}</span>
                 ))}
               </div>
